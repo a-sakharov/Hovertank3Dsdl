@@ -31,7 +31,8 @@ unsigned tilemap[MAPSIZE][MAPSIZE];
 // play stuff
 //
 
-int godmode,singlestep,leveldone,startlevel,bestlevel;
+int godmode,singlestep,leveldone,startlevel;
+extern int bestlevel;
 
 timetype timestruct;
 

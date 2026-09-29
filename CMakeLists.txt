@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.20)
 
 project(Hovertank3Dsdl LANGUAGES C)
 
-set(CMAKE_VERBOSE_MAKEFILE true)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
@@ -16,7 +15,6 @@ add_executable(hovertank3D
     HOVLOOP.C
     HOVMAIN.C
     HOVSCALE.C
-    HOVTEXT.C
     HOVTRACE.C
     IDLIBC.C
     JM_SB.C
@@ -31,6 +29,7 @@ target_compile_options(hovertank3D PRIVATE -include "${CMAKE_CURRENT_SOURCE_DIR}
 
 target_link_libraries(hovertank3D PRIVATE SDL2::SDL2)
 add_definitions(-w)
+target_link_libraries(hovertank3D PRIVATE m)
 # target_link_libraries(hovertank3D PRIVATE SDL2::SDL2_image)
 
 target_include_directories(hovertank3D PRIVATE ${SDL2_INCLUDE_DIRS})

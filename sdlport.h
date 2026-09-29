@@ -7,6 +7,10 @@
 #define interrupt
 
 #include <stdint.h>
+#include <stdlib.h>
+#include <math.h>
+
+
 
 // DOS COMPAT
 
@@ -18,6 +22,7 @@ typedef void* memptr;
 #define O_BINARY 0
 
 #define stdprn stderr
+
 
 extern WORD _AX;
 extern BYTE _AH;
@@ -32,13 +37,65 @@ extern WORD _DX;
 extern WORD _ES;
 extern WORD _DS;
 
-//extern DWORD sbOldIntHand;
+extern DWORD fontcolor;
+extern DWORD px;
+extern DWORD py;
+extern DWORD pdrawmode;
+extern unsigned screenofs;
+
+extern DWORD screenseg;
+extern DWORD otherseg;
+extern DWORD screenofs;
+extern DWORD screenorigin;
+extern DWORD planemask;
+extern DWORD planecount;
+extern DWORD linewidth;
+
+extern unsigned SndPriority;
+
+
+extern WORD SndPtr;
+extern void* soundseg;
+extern unsigned int8hook;
+extern unsigned inttime;
+extern long timecount;
+extern int dontplay;
+
+extern char keydown[128];
+extern int NBKscan;
+extern int NBKascii;
+
+
+#define FP_OFF(x) (WORD)x
+#define FP_SEG(x) (WORD)x
+#define MK_FP(x, y) 0
 
 void geninterrupt(int intr);
 
-void setvect(unsigned intr,  void (*isr)());
+typedef void (*intr_fn)();
 
-// ---------------------- IDASME.//todo:replaceasm port ----------------------
+//typedef unsigned boolean;
+
+void setvect(unsigned intr, intr_fn isr);
+intr_fn getvect(int intr_num); 
+
+WORD bioskey(WORD cmd);
+DWORD farcoreleft(void);
+void farfree(void *block);
+void *farmalloc(DWORD size);
+void outportb(WORD portid, BYTE value);
+void movedata(unsigned sourceseg, unsigned sourceoff, unsigned destseg, unsigned destoff, size_t count);
+long filelength(int handle);
+
+
+void textbackground(int color);
+void textcolor(int color);
+void hardresume(int code);
+void harderr(int (*handler)());
+unsigned coreleft(void);
+void clrscr(void);
+
+// ---------------------- IDASME.asm ----------------------
 
 //====================
 //
@@ -138,3 +195,87 @@ void ScaleLine(WORD pixels, DWORD scaleptr, DWORD picptr, WORD screen);
 //
 //============
 void DrawSpriteT(WORD wide, WORD height, WORD source, WORD dest, WORD plsize);
+
+// ---------------------- IDASM.asm ----------------------
+
+//========
+//
+// CallTimer
+//
+// Call the bios int8 to turn off drive motors
+//
+//========
+void CallTimer();
+
+//========
+//
+// StartupSound
+//
+// Sets up the new INT 8 ISR and various internal pointers.
+// Assumes that the calling program has pointer soundseg to something
+// meaningful...
+//
+//========
+void StartupSound();
+
+//========
+//
+// StartupKbd
+//
+// Sets up the new INT 8 ISR and various internal pointers.
+// Assumes that the calling program has pointer soundseg to something
+// meaningful...
+//
+//========
+void StartupKbd();
+
+//========
+//
+// ShutdownSound
+//
+//========
+void ShutdownSound();
+
+//========
+//
+// ShutdownKbd
+//
+//========
+void ShutdownKbd();
+
+//========
+//
+// WaitVBL (int number)
+//
+//========
+void WaitVBL(int number);
+
+//===========
+//
+// PlaySoundSPK (soundnum)
+//
+// If the sound's priority is >= the current priority, SoundPtr, SndPriority,
+// and the timer speed are changed
+//
+// Hacked for sound blaster support!
+//
+//===========
+void PlaySound(int playnum);
+
+//=================================================
+//
+// InitRndT (boolean randomize)
+// Init table based RND generator
+// if randomize is false, the counter is set to 0
+//
+//=================================================
+//void InitRndT(boolean randomize);
+
+//=================================================
+//
+// InitRnd (boolean randomize)
+// if randomize is false, the counter is set to 0
+//
+//=================================================
+//void InitRnd(boolean randomize);
+
