@@ -518,19 +518,19 @@ void Block (x,y,color)
 
   dest = ylookup[y<<3]+x+screenofs;
 
-asm {
-	mov	es,[screenseg]
-	mov	di,[dest]
-	mov	al,[BYTE PTR color]
-	mov	[es:di],al
-	mov	[es:di+SCREENWIDTH*1],al
-	mov	[es:di+SCREENWIDTH*2],al
-	mov	[es:di+SCREENWIDTH*3],al
-	mov	[es:di+SCREENWIDTH*4],al
-	mov	[es:di+SCREENWIDTH*5],al
-	mov	[es:di+SCREENWIDTH*6],al
-	mov	[es:di+SCREENWIDTH*7],al
-  }
+//todo:replaceasm {
+	//todo:replaceasm mov	es,[screenseg]
+	//todo:replaceasm mov	di,[dest]
+	//todo:replaceasm mov	al,[BYTE PTR color]
+	//todo:replaceasm mov	[es:di],al
+	//todo:replaceasm mov	[es:di+SCREENWIDTH*1],al
+	//todo:replaceasm mov	[es:di+SCREENWIDTH*2],al
+	//todo:replaceasm mov	[es:di+SCREENWIDTH*3],al
+	//todo:replaceasm mov	[es:di+SCREENWIDTH*4],al
+	//todo:replaceasm mov	[es:di+SCREENWIDTH*5],al
+	//todo:replaceasm mov	[es:di+SCREENWIDTH*6],al
+	//todo:replaceasm mov	[es:di+SCREENWIDTH*7],al
+  //todo:replaceasm }
 }
 
 void Frame(xl,yl,xh,yh,color)

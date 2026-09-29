@@ -393,7 +393,7 @@ void ReadJoystick (int joynum,int *xcount,int *ycount)
 
  outportb (0x201,inportb (0x201));	/* start the signal pulse */
 
- asm cli;
+ //todo:replaceasm cli;
 
  do
  {
@@ -404,7 +404,7 @@ void ReadJoystick (int joynum,int *xcount,int *ycount)
    *ycount+=a2;
  } while ((a1+a2!=0) && (*xcount<500) && (*ycount<500));
 
- asm sti;
+ //todo:replaceasm sti;
 }
 
 
@@ -591,75 +591,75 @@ unsigned long LoadFile(char *filename,char huge *buffer)
  buf1=FP_OFF(buffer);
  buf2=FP_SEG(buffer);
 
-asm		mov	WORD PTR foff1,0  	// file offset = 0 (start)
-asm		mov	WORD PTR foff2,0
+//todo:replaceasm 	mov	WORD PTR foff1,0  	// file offset = 0 (start)
+//todo:replaceasm 	mov	WORD PTR foff2,0
 
-asm		mov	dx,filename
-asm		mov	ax,3d00h		// OPEN w/handle (read only)
-asm		int	21h
-asm		jc	out
+//todo:replaceasm 	mov	dx,filename
+//todo:replaceasm 	mov	ax,3d00h		// OPEN w/handle (read only)
+//todo:replaceasm 	int	21h
+//todo:replaceasm 	jc	out
 
-asm		mov	handle,ax
-asm		mov	bx,ax
-asm		xor	cx,cx
-asm		xor	dx,dx
-asm		mov	ax,4202h
-asm		int	21h			// SEEK (find file length)
-asm		jc	out
+//todo:replaceasm 	mov	handle,ax
+//todo:replaceasm 	mov	bx,ax
+//todo:replaceasm 	xor	cx,cx
+//todo:replaceasm 	xor	dx,dx
+//todo:replaceasm 	mov	ax,4202h
+//todo:replaceasm 	int	21h			// SEEK (find file length)
+//todo:replaceasm 	jc	out
 
-asm		mov	flength1,ax
-asm		mov	len1,ax
-asm		mov	flength2,dx
-asm		mov	len2,dx
+//todo:replaceasm 	mov	flength1,ax
+//todo:replaceasm 	mov	len1,ax
+//todo:replaceasm 	mov	flength2,dx
+//todo:replaceasm 	mov	len2,dx
 
-asm		mov	bx,handle
-asm		xor	cx,cx
-asm		xor	dx,dx
-asm		mov	ax,4200h
-asm		int	21h			// SEEK (to file start)
-asm		jc	out
+//todo:replaceasm 	mov	bx,handle
+//todo:replaceasm 	xor	cx,cx
+//todo:replaceasm 	xor	dx,dx
+//todo:replaceasm 	mov	ax,4200h
+//todo:replaceasm 	int	21h			// SEEK (to file start)
+//todo:replaceasm 	jc	out
 
-asm		cmp	WORD PTR len2,0			// MULTI-SEGMENTAL?
-asm		je      L_2
+//todo:replaceasm 	cmp	WORD PTR len2,0			// MULTI-SEGMENTAL?
+//todo:replaceasm 	je      L_2
 
 L_1:
 
-asm		push	ds
-asm		mov	bx,handle
-asm		mov	cx,8000h		// read 32K chunks
-asm		mov	dx,buf1
-asm		mov	ax,buf2
-asm		mov	ds,ax
-asm		mov	ah,3fh			// READ w/handle
-asm		int	21h
-asm		pop	ds
-asm		jc	out
+//todo:replaceasm 	push	ds
+//todo:replaceasm 	mov	bx,handle
+//todo:replaceasm 	mov	cx,8000h		// read 32K chunks
+//todo:replaceasm 	mov	dx,buf1
+//todo:replaceasm 	mov	ax,buf2
+//todo:replaceasm 	mov	ds,ax
+//todo:replaceasm 	mov	ah,3fh			// READ w/handle
+//todo:replaceasm 	int	21h
+//todo:replaceasm 	pop	ds
+//todo:replaceasm 	jc	out
 
-asm		add	buf2,800h
-asm		sub	len1,8000h
-asm		sbb	WORD PTR len2,0
-asm		cmp	WORD PTR len2,0
-asm		ja	L_1
-asm		cmp	len1,8000h
-asm		jae	L_1
+//todo:replaceasm 	add	buf2,800h
+//todo:replaceasm 	sub	len1,8000h
+//todo:replaceasm 	sbb	WORD PTR len2,0
+//todo:replaceasm 	cmp	WORD PTR len2,0
+//todo:replaceasm 	ja	L_1
+//todo:replaceasm 	cmp	len1,8000h
+//todo:replaceasm 	jae	L_1
 
 L_2:
 
-asm		push	ds
-asm		mov	bx,handle
-asm		mov	cx,len1
-asm		mov	dx,buf1
-asm		mov	ax,buf2
-asm		mov	ds,ax
-asm		mov	ah,3fh			// READ w/handle
-asm		int	21h
-asm		pop	ds
+//todo:replaceasm 	push	ds
+//todo:replaceasm 	mov	bx,handle
+//todo:replaceasm 	mov	cx,len1
+//todo:replaceasm 	mov	dx,buf1
+//todo:replaceasm 	mov	ax,buf2
+//todo:replaceasm 	mov	ds,ax
+//todo:replaceasm 	mov	ah,3fh			// READ w/handle
+//todo:replaceasm 	int	21h
+//todo:replaceasm 	pop	ds
 
 out:
 
-asm		mov	bx,handle		// CLOSE w/handle
-asm		mov	ah,3eh
-asm		int	21h
+//todo:replaceasm 	mov	bx,handle		// CLOSE w/handle
+//todo:replaceasm 	mov	ah,3eh
+//todo:replaceasm 	int	21h
 
 
 return (flength2*0x10000+flength1);
@@ -685,57 +685,57 @@ void SaveFile(char *filename,char huge *buffer, long size)
  buf1=FP_OFF(buffer);
  buf2=FP_SEG(buffer);
 
-asm		mov	WORD PTR foff1,0  		// file offset = 0 (start)
-asm		mov	WORD PTR foff2,0
+//todo:replaceasm 	mov	WORD PTR foff1,0  		// file offset = 0 (start)
+//todo:replaceasm 	mov	WORD PTR foff2,0
 
-asm		mov	dx,filename
-asm		mov	ax,3c00h		// CREATE w/handle (read only)
-asm		xor	cx,cx
-asm		int	21h
-asm		jc	out
+//todo:replaceasm 	mov	dx,filename
+//todo:replaceasm 	mov	ax,3c00h		// CREATE w/handle (read only)
+//todo:replaceasm 	xor	cx,cx
+//todo:replaceasm 	int	21h
+//todo:replaceasm 	jc	out
 
-asm		mov	handle,ax
-asm		cmp	word ptr size+2,0	// larger than 1 segment?
-asm		je	L2
+//todo:replaceasm 	mov	handle,ax
+//todo:replaceasm 	cmp	word ptr size+2,0	// larger than 1 segment?
+//todo:replaceasm 	je	L2
 
 L1:
 
-asm		push	ds
-asm		mov	bx,handle
-asm		mov	cx,8000h
-asm		mov	dx,buf1
-asm		mov	ax,buf2
-asm		mov	ds,ax
-asm		mov	ah,40h			// WRITE w/handle
-asm		int	21h
-asm		pop	ds
+//todo:replaceasm 	push	ds
+//todo:replaceasm 	mov	bx,handle
+//todo:replaceasm 	mov	cx,8000h
+//todo:replaceasm 	mov	dx,buf1
+//todo:replaceasm 	mov	ax,buf2
+//todo:replaceasm 	mov	ds,ax
+//todo:replaceasm 	mov	ah,40h			// WRITE w/handle
+//todo:replaceasm 	int	21h
+//todo:replaceasm 	pop	ds
 
-asm		add	buf2,800h		// bump ptr up 1/2 segment
-asm		sub	WORD PTR size,8000h	// done yet?
-asm		sbb	WORD PTR size+2,0
-asm		cmp	WORD PTR size+2,0
-asm		ja	L1
-asm		cmp	WORD PTR size,8000h
-asm		jae	L1
+//todo:replaceasm 	add	buf2,800h		// bump ptr up 1/2 segment
+//todo:replaceasm 	sub	WORD PTR size,8000h	// done yet?
+//todo:replaceasm 	sbb	WORD PTR size+2,0
+//todo:replaceasm 	cmp	WORD PTR size+2,0
+//todo:replaceasm 	ja	L1
+//todo:replaceasm 	cmp	WORD PTR size,8000h
+//todo:replaceasm 	jae	L1
 
 L2:
 
-asm		push	ds
-asm		mov	bx,handle
-asm		mov	cx,WORD PTR size
-asm		mov	dx,buf1
-asm		mov	ax,buf2
-asm		mov	ds,ax
-asm		mov	ah,40h			// WRITE w/handle
-asm		int	21h
-asm		pop	ds
-asm		jmp	out
+//todo:replaceasm 	push	ds
+//todo:replaceasm 	mov	bx,handle
+//todo:replaceasm 	mov	cx,WORD PTR size
+//todo:replaceasm 	mov	dx,buf1
+//todo:replaceasm 	mov	ax,buf2
+//todo:replaceasm 	mov	ds,ax
+//todo:replaceasm 	mov	ah,40h			// WRITE w/handle
+//todo:replaceasm 	int	21h
+//todo:replaceasm 	pop	ds
+//todo:replaceasm 	jmp	out
 
 out:
 
-asm		mov	bx,handle		// CLOSE w/handle
-asm		mov	ah,3eh
-asm		int	21h
+//todo:replaceasm 	mov	bx,handle		// CLOSE w/handle
+//todo:replaceasm 	mov	ah,3eh
+//todo:replaceasm 	int	21h
 
 }
 
@@ -955,7 +955,7 @@ void HuffExpand (unsigned char huge *source, unsigned char huge *dest,
 
   headptr = hufftable+254;	// head node is allways node 254
 
-#if0
+#if 0
   bit = 1;
   byte = *source++;
 
@@ -1006,63 +1006,63 @@ void HuffExpand (unsigned char huge *source, unsigned char huge *dest,
 // ss:bx node pointer
 //
 
-asm     mov	bx,[headptr]
-asm	mov	cl,1
+//todo:replaceasm     mov	bx,[headptr]
+//todo:replaceasm mov	cl,1
 
-asm	mov	si,[sourceoff]
-asm	mov	di,[destoff]
-asm	mov	es,[destseg]
-asm	mov	ds,[sourceseg]
+//todo:replaceasm mov	si,[sourceoff]
+//todo:replaceasm mov	di,[destoff]
+//todo:replaceasm mov	es,[destseg]
+//todo:replaceasm mov	ds,[sourceseg]
 
-asm	lodsb			// load first byte
+//todo:replaceasm lodsb			// load first byte
 
 expand:
-asm	test	al,cl		// bit set?
-asm	jnz	bit1
-asm	mov	dx,[ss:bx]	// take bit0 path from node
-asm	jmp	gotcode
+//todo:replaceasm test	al,cl		// bit set?
+//todo:replaceasm jnz	bit1
+//todo:replaceasm mov	dx,[ss:bx]	// take bit0 path from node
+//todo:replaceasm jmp	gotcode
 bit1:
-asm	mov	dx,[ss:bx+2]	// take bit1 path
+//todo:replaceasm mov	dx,[ss:bx+2]	// take bit1 path
 
 gotcode:
-asm	shl	cl,1		// advance to next bit position
-asm	jnc	sourceup
-asm	lodsb
-asm	cmp	si,0x10		// normalize ds:si
-asm  	jb	sinorm
-asm	mov	cx,ds
-asm	inc	cx
-asm	mov	ds,cx
-asm	xor	si,si
+//todo:replaceasm shl	cl,1		// advance to next bit position
+//todo:replaceasm jnc	sourceup
+//todo:replaceasm lodsb
+//todo:replaceasm cmp	si,0x10		// normalize ds:si
+//todo:replaceasm  	jb	sinorm
+//todo:replaceasm mov	cx,ds
+//todo:replaceasm inc	cx
+//todo:replaceasm mov	ds,cx
+//todo:replaceasm xor	si,si
 sinorm:
-asm	mov	cl,1		// back to first bit
+//todo:replaceasm mov	cl,1		// back to first bit
 
 sourceup:
-asm	or	dh,dh		// if dx<256 its a byte, else move node
-asm	jz	storebyte
-asm	mov	bx,dx		// next node = (huffnode *)code
-asm	jmp	expand
+//todo:replaceasm or	dh,dh		// if dx<256 its a byte, else move node
+//todo:replaceasm jz	storebyte
+//todo:replaceasm mov	bx,dx		// next node = (huffnode *)code
+//todo:replaceasm jmp	expand
 
 storebyte:
-asm	mov	[es:di],dl
-asm	inc	di		// write a decopmpressed byte out
-asm	mov	bx,[headptr]	// back to the head node for next bit
+//todo:replaceasm mov	[es:di],dl
+//todo:replaceasm inc	di		// write a decopmpressed byte out
+//todo:replaceasm mov	bx,[headptr]	// back to the head node for next bit
 
-asm	cmp	di,0x10		// normalize es:di
-asm  	jb	dinorm
-asm	mov	dx,es
-asm	inc	dx
-asm	mov	es,dx
-asm	xor	di,di
+//todo:replaceasm cmp	di,0x10		// normalize es:di
+//todo:replaceasm  	jb	dinorm
+//todo:replaceasm mov	dx,es
+//todo:replaceasm inc	dx
+//todo:replaceasm mov	es,dx
+//todo:replaceasm xor	di,di
 dinorm:
 
-asm	sub	[WORD PTR ss:length],1
-asm	jnc	expand
-asm  	dec	[WORD PTR ss:length+2]
-asm	jns	expand		// when length = ffff ffff, done
+//todo:replaceasm sub	[WORD PTR ss:length],1
+//todo:replaceasm jnc	expand
+//todo:replaceasm  	dec	[WORD PTR ss:length+2]
+//todo:replaceasm jns	expand		// when length = ffff ffff, done
 
-asm	mov	ax,ss
-asm	mov	ds,ax
+//todo:replaceasm mov	ax,ss
+//todo:replaceasm mov	ds,ax
 
 }
 

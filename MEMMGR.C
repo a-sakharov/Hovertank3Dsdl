@@ -82,30 +82,30 @@ void CheckForEMS (void)
 {
   char	emmname[9] = "EMMXXXX0";
 
-asm	mov	dx,OFFSET emmname
-asm	mov	ax,0x3d00
-asm	int	0x21		// try to open EMMXXXX0 device
-asm	jc	error
+//todo:replaceasm mov	dx,OFFSET emmname
+//todo:replaceasm mov	ax,0x3d00
+//todo:replaceasm int	0x21		// try to open EMMXXXX0 device
+//todo:replaceasm jc	error
 
-asm	mov	bx,ax
-asm	mov	ax,0x4400
+//todo:replaceasm mov	bx,ax
+//todo:replaceasm mov	ax,0x4400
 
-asm	int	0x21		// get device info
-asm	jc	error
+//todo:replaceasm int	0x21		// get device info
+//todo:replaceasm jc	error
 
-asm	and	dx,0x80
-asm	jz	error
+//todo:replaceasm and	dx,0x80
+//todo:replaceasm jz	error
 
-asm	mov	ax,0x4407
+//todo:replaceasm mov	ax,0x4407
 
-asm	int	0x21		// get status
-asm	jc	error
-asm	or	al,al
-asm	jz	error
+//todo:replaceasm int	0x21		// get status
+//todo:replaceasm jc	error
+//todo:replaceasm or	al,al
+//todo:replaceasm jz	error
 
-asm	mov	ah,0x3e
-asm	int	0x21		// close handle
-asm	jc	error
+//todo:replaceasm mov	ah,0x3e
+//todo:replaceasm int	0x21		// close handle
+//todo:replaceasm jc	error
 
 //
 // EMS is good
@@ -172,14 +172,14 @@ void InsertBlock (int block)
     source = ((unsigned)&blocks[numblocks])-2;
     dest = ((unsigned)&blocks[numblocks+1])-2;
     length = (numblocks-1-block)*sizeof(blocks[0])/2;
-asm	mov	cx,length
-asm	mov	si,source
-asm	mov	di,dest
-asm	mov	ax,ds
-asm	mov	es,ax
-asm	std
-asm	rep	movsw
-asm	cld
+//todo:replaceasm mov	cx,length
+//todo:replaceasm mov	si,source
+//todo:replaceasm mov	di,dest
+//todo:replaceasm mov	ax,ds
+//todo:replaceasm mov	es,ax
+//todo:replaceasm std
+//todo:replaceasm rep	movsw
+//todo:replaceasm cld
   }
   if (++numblocks>=MAXBLOCKS)
     Quit ("Memory manager error: Too many blocks!");
@@ -461,32 +461,32 @@ void MMSetPurge (memptr *baseptr, int purge)
 //
 void MoveParaBase (unsigned source, unsigned dest, unsigned words)
 {
-asm	mov	cx,words
-asm	xor	si,si
-asm	xor	di,di
-asm	mov	ax,source
-asm	mov	bx,dest
-asm	mov	ds,source
-asm	mov	es,dest
-asm	rep	movsw
-asm	mov	ax,ss
-asm	mov	ds,ax
+//todo:replaceasm mov	cx,words
+//todo:replaceasm xor	si,si
+//todo:replaceasm xor	di,di
+//todo:replaceasm mov	ax,source
+//todo:replaceasm mov	bx,dest
+//todo:replaceasm mov	ds,source
+//todo:replaceasm mov	es,dest
+//todo:replaceasm rep	movsw
+//todo:replaceasm mov	ax,ss
+//todo:replaceasm mov	ds,ax
 }
 
 void MoveParaBaseUp (unsigned source, unsigned dest, unsigned words)
 {
-asm	mov	cx,words
-asm	mov	si,cx
-asm	dec	si
-asm	shl	si,1
-asm	mov	di,si
-asm	mov	ax,source
-asm	mov	bx,dest
-asm	mov	ds,source
-asm	mov	es,dest
-asm	rep	movsw
-asm	mov	ax,ss
-asm	mov	ds,ax
+//todo:replaceasm mov	cx,words
+//todo:replaceasm mov	si,cx
+//todo:replaceasm dec	si
+//todo:replaceasm shl	si,1
+//todo:replaceasm mov	di,si
+//todo:replaceasm mov	ax,source
+//todo:replaceasm mov	bx,dest
+//todo:replaceasm mov	ds,source
+//todo:replaceasm mov	es,dest
+//todo:replaceasm rep	movsw
+//todo:replaceasm mov	ax,ss
+//todo:replaceasm mov	ds,ax
 }
 
 
@@ -494,7 +494,7 @@ void MoveParas (unsigned source, unsigned dest, unsigned paragraphs)
 {
   if (source>dest)
   {
-asm	cld
+//todo:replaceasm cld
     while (paragraphs>0xfff)
     {
       MoveParaBase (source,dest,0xfff*8);
@@ -506,7 +506,7 @@ asm	cld
   }
   else
   {
-asm	std
+//todo:replaceasm std
     source+=paragraphs;
     dest+=paragraphs;
     while (paragraphs>0xfff)
@@ -519,7 +519,7 @@ asm	std
     source-=paragraphs;
     dest-=paragraphs;
     MoveParaBaseUp (source,dest,paragraphs*8);
-asm	cld
+//todo:replaceasm cld
   }
 }
 
@@ -709,7 +709,7 @@ void MMSortMem (void)
 =
 =======================
 */
-#include <STDIO.H>
+#include <stdio.h>
 
 void MMBlockDump (void)
 {

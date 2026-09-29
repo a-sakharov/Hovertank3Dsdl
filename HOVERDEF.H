@@ -25,7 +25,7 @@
 */
 #include "JM_SB.H"
 #include "IDLIB.H"
-#include <MATH.H>
+#include <math.h>
 
 //#define PROFILE
 
@@ -206,7 +206,7 @@ void	BuildTables (void);
 //
 // temp stuff
 //
-extern int statx,staty;
+//extern int statx,staty;
 
 
 extern unsigned tilemap[MAPSIZE][MAPSIZE];

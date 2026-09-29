@@ -177,54 +177,54 @@ void DrawLine (int xl, int xh, int y,int color)
 
     maskleft&=maskright;
 
-    asm	mov	es,[screenseg]
-    asm	mov	di,[dest]
-    asm	mov	dx,GC_INDEX
+    //todo:replaceasm mov	es,[screenseg]
+    //todo:replaceasm mov	di,[dest]
+    //todo:replaceasm mov	dx,GC_INDEX
 
-    asm	mov	al,GC_BITMASK
-    asm	mov	ah,[BYTE PTR maskleft]
-    asm	out	dx,ax		// mask off pixels
+    //todo:replaceasm mov	al,GC_BITMASK
+    //todo:replaceasm mov	ah,[BYTE PTR maskleft]
+    //todo:replaceasm out	dx,ax		// mask off pixels
 
-    asm	mov	al,[BYTE PTR color]
-    asm	xchg	al,[es:di]	// load latches and write pixels
+    //todo:replaceasm mov	al,[BYTE PTR color]
+    //todo:replaceasm xchg	al,[es:di]	// load latches and write pixels
 
     return;
   }
 
-asm	mov	es,[screenseg]
-asm	mov	di,[dest]
-asm	mov	dx,GC_INDEX
-asm	mov	bh,[BYTE PTR color]
+//todo:replaceasm mov	es,[screenseg]
+//todo:replaceasm mov	di,[dest]
+//todo:replaceasm mov	dx,GC_INDEX
+//todo:replaceasm mov	bh,[BYTE PTR color]
 
 //
 // draw left side
 //
-asm	mov	al,GC_BITMASK
-asm	mov	ah,[BYTE PTR maskleft]
-asm	out	dx,ax		// mask off pixels
+//todo:replaceasm mov	al,GC_BITMASK
+//todo:replaceasm mov	ah,[BYTE PTR maskleft]
+//todo:replaceasm out	dx,ax		// mask off pixels
 
-asm	mov	al,bh
-asm	mov	bl,[es:di]	// load latches
-asm	stosb
+//todo:replaceasm mov	al,bh
+//todo:replaceasm mov	bl,[es:di]	// load latches
+//todo:replaceasm stosb
 
 //
 // draw middle
 //
-asm	mov	ax,GC_BITMASK + 255*256
-asm	out	dx,ax		// no masking
+//todo:replaceasm mov	ax,GC_BITMASK + 255*256
+//todo:replaceasm out	dx,ax		// no masking
 
-asm	mov	al,bh
-asm	mov	cx,[mid]
-asm	rep	stosb
+//todo:replaceasm mov	al,bh
+//todo:replaceasm mov	cx,[mid]
+//todo:replaceasm rep	stosb
 
 //
 // draw right side
 //
-asm	mov	al,GC_BITMASK
-asm	mov	ah,[BYTE PTR maskright]
-asm	out	dx,ax		// mask off pixels
+//todo:replaceasm mov	al,GC_BITMASK
+//todo:replaceasm mov	ah,[BYTE PTR maskright]
+//todo:replaceasm out	dx,ax		// mask off pixels
 
-asm	xchg	bh,[es:di]	// load latches and write pixels
+//todo:replaceasm xchg	bh,[es:di]	// load latches and write pixels
 
 }
 
@@ -525,23 +525,23 @@ fixed FixedByFrac (fixed a, fixed b)
 {
   fixed value;
 
-asm	mov	si,[WORD PTR a+2]
-asm	xor	si,[WORD PTR b+2]
-asm	and	si,0x8000		// si is high word of result (sign bit)
+//todo:replaceasm mov	si,[WORD PTR a+2]
+//todo:replaceasm xor	si,[WORD PTR b+2]
+//todo:replaceasm and	si,0x8000		// si is high word of result (sign bit)
 
-asm	mov	bx,[WORD PTR b]
-asm	mov	ax,[WORD PTR a]
-asm	mul	bx			// fraction*fraction
-asm	mov	di,dx			// di is low word of result
-asm	mov	ax,[WORD PTR a+2]
-asm	and	ax,0x7fff		// strip sign bit
-asm	mul	bx			// units*fraction
-asm     add	ax,di
-asm	adc	dx,0
-asm	or	dx,si
+//todo:replaceasm mov	bx,[WORD PTR b]
+//todo:replaceasm mov	ax,[WORD PTR a]
+//todo:replaceasm mul	bx			// fraction*fraction
+//todo:replaceasm mov	di,dx			// di is low word of result
+//todo:replaceasm mov	ax,[WORD PTR a+2]
+//todo:replaceasm and	ax,0x7fff		// strip sign bit
+//todo:replaceasm mul	bx			// units*fraction
+//todo:replaceasm     add	ax,di
+//todo:replaceasm adc	dx,0
+//todo:replaceasm or	dx,si
 
-asm	mov	[WORD PTR value],ax
-asm	mov	[WORD PTR value+2],dx
+//todo:replaceasm mov	[WORD PTR value],ax
+//todo:replaceasm mov	[WORD PTR value+2],dx
 
   return value;
 }
@@ -562,44 +562,44 @@ fixed FixedAdd (fixed a, fixed b)
 {
   fixed value;
 
-asm	mov	ax,[WORD PTR a]
-asm	mov	dx,[WORD PTR a+2]
+//todo:replaceasm mov	ax,[WORD PTR a]
+//todo:replaceasm mov	dx,[WORD PTR a+2]
 
-asm	mov	bx,[WORD PTR b]
-asm	mov	cx,[WORD PTR b+2]
+//todo:replaceasm mov	bx,[WORD PTR b]
+//todo:replaceasm mov	cx,[WORD PTR b+2]
 
-asm	or	dx,dx
-asm	jns	aok:		// negative?
-asm	and	dx,0x7fff
-asm	not	ax		// convert a from signed magnitude to 2's compl
-asm	not	dx
-asm	add	ax,1
-asm	adc	dx,0
+//todo:replaceasm or	dx,dx
+//todo:replaceasm jns	aok:		// negative?
+//todo:replaceasm and	dx,0x7fff
+//todo:replaceasm not	ax		// convert a from signed magnitude to 2's compl
+//todo:replaceasm not	dx
+//todo:replaceasm add	ax,1
+//todo:replaceasm adc	dx,0
 aok:
 
-asm	or	cx,cx
-asm	jns	bok:		// negative?
-asm	and	cx,0x7fff
-asm	not	bx		// convert b from signed magnitude to 2's compl
-asm	not	cx
-asm	add	bx,1
-asm	adc	cx,0
+//todo:replaceasm or	cx,cx
+//todo:replaceasm jns	bok:		// negative?
+//todo:replaceasm and	cx,0x7fff
+//todo:replaceasm not	bx		// convert b from signed magnitude to 2's compl
+//todo:replaceasm not	cx
+//todo:replaceasm add	bx,1
+//todo:replaceasm adc	cx,0
 bok:
 
-asm	add	ax,bx		// perform the addition
-asm	adc	dx,cx
-asm	jns	done
+//todo:replaceasm add	ax,bx		// perform the addition
+//todo:replaceasm adc	dx,cx
+//todo:replaceasm jns	done
 
-asm	and	dx,0x7fff	// value was negative
-asm	not	ax		// back to signed magnitude
-asm	not	dx
-asm	add	ax,1
-asm	adc	dx,0
+//todo:replaceasm and	dx,0x7fff	// value was negative
+//todo:replaceasm not	ax		// back to signed magnitude
+//todo:replaceasm not	dx
+//todo:replaceasm add	ax,1
+//todo:replaceasm adc	dx,0
 
 done:
 
-asm	mov	[WORD PTR value],ax
-asm	mov	[WORD PTR value+2],dx
+//todo:replaceasm mov	[WORD PTR value],ax
+//todo:replaceasm mov	[WORD PTR value+2],dx
 
   return value;
 }
@@ -768,7 +768,7 @@ void BuildTables (void)
   for (i=0;i<SHIFTFRAMES;i++)
   {
     angle = (long)ANGLES*i/SHIFTFRAMES;
-    value = FixedByFrac(7*GLOBAL1,sintable[angle]);
+    value = FixedByFrac(7*GLOBAL1,sintable[(int)angle]);
     yshift[i] = SCREENWIDTH*(FixedAdd(value,8*GLOBAL1)>>16);
   }
 
@@ -1007,73 +1007,73 @@ void DrawCrossHairs (void)
 {
   EGABITMASK (60);
 
-  asm	mov	es,[screenseg]
-  asm	mov	cx,CROSSSIZE
-  asm	mov	di,SCREENWIDTH*(64-CROSSSIZE/2)+20
-  asm	add	di,[screenofs]
-  asm	mov	dx,SCREENWIDTH
+  //todo:replaceasm mov	es,[screenseg]
+  //todo:replaceasm mov	cx,CROSSSIZE
+  //todo:replaceasm mov	di,SCREENWIDTH*(64-CROSSSIZE/2)+20
+  //todo:replaceasm add	di,[screenofs]
+  //todo:replaceasm mov	dx,SCREENWIDTH
 vert1:
-  asm	mov	al,0
-  asm	xchg	al,[BYTE PTR es:di]	// write color 0
-  asm	add	di,dx
-  asm	loop	vert1
+  //todo:replaceasm mov	al,0
+  //todo:replaceasm xchg	al,[BYTE PTR es:di]	// write color 0
+  //todo:replaceasm add	di,dx
+  //todo:replaceasm loop	vert1
 
   EGABITMASK (255);
 
-  asm	mov	di,SCREENWIDTH*(82-CROSSSIZE/2)+18
-  asm	add	di,[screenofs]
-  asm	mov	al,0
-  asm	mov	cx,5
-  asm	rep	stosb
-  asm	add	di,SCREENWIDTH-5
-  asm	mov	cx,5
-  asm	rep	stosb
-  asm	add	di,SCREENWIDTH-5
-  asm	mov	cx,5
-  asm	rep	stosb
-  asm	add	di,SCREENWIDTH-5
-  asm	mov	cx,5
-  asm	rep	stosb
+  //todo:replaceasm mov	di,SCREENWIDTH*(82-CROSSSIZE/2)+18
+  //todo:replaceasm add	di,[screenofs]
+  //todo:replaceasm mov	al,0
+  //todo:replaceasm mov	cx,5
+  //todo:replaceasm rep	stosb
+  //todo:replaceasm add	di,SCREENWIDTH-5
+  //todo:replaceasm mov	cx,5
+  //todo:replaceasm rep	stosb
+  //todo:replaceasm add	di,SCREENWIDTH-5
+  //todo:replaceasm mov	cx,5
+  //todo:replaceasm rep	stosb
+  //todo:replaceasm add	di,SCREENWIDTH-5
+  //todo:replaceasm mov	cx,5
+  //todo:replaceasm rep	stosb
 
-  asm	mov	di,SCREENWIDTH*(83-CROSSSIZE/2)+19
-  asm	add	di,[screenofs]
-  asm	mov	al,15
-  asm	mov	cx,3
-  asm	rep	stosb
-  asm	add	di,SCREENWIDTH-3
-  asm	mov	cx,3
-  asm	rep	stosb
+  //todo:replaceasm mov	di,SCREENWIDTH*(83-CROSSSIZE/2)+19
+  //todo:replaceasm add	di,[screenofs]
+  //todo:replaceasm mov	al,15
+  //todo:replaceasm mov	cx,3
+  //todo:replaceasm rep	stosb
+  //todo:replaceasm add	di,SCREENWIDTH-3
+  //todo:replaceasm mov	cx,3
+  //todo:replaceasm rep	stosb
 
 
   EGABITMASK (127);
 
-  asm	mov	di,SCREENWIDTH*(83-CROSSSIZE/2)+18
-  asm	add	di,[screenofs]
-  asm	mov	al,15
-  asm	xchg	al,[es:di]
-  asm	mov	al,15
-  asm	xchg	al,[es:di+SCREENWIDTH]
+  //todo:replaceasm mov	di,SCREENWIDTH*(83-CROSSSIZE/2)+18
+  //todo:replaceasm add	di,[screenofs]
+  //todo:replaceasm mov	al,15
+  //todo:replaceasm xchg	al,[es:di]
+  //todo:replaceasm mov	al,15
+  //todo:replaceasm xchg	al,[es:di+SCREENWIDTH]
 
   EGABITMASK (254);
 
-  asm	mov	di,SCREENWIDTH*(83-CROSSSIZE/2)+18
-  asm	add	di,[screenofs]
-  asm	mov	al,15
-  asm	xchg	al,[es:di+4]
-  asm	mov	al,15
-  asm	xchg	al,[es:di+4+SCREENWIDTH]
+  //todo:replaceasm mov	di,SCREENWIDTH*(83-CROSSSIZE/2)+18
+  //todo:replaceasm add	di,[screenofs]
+  //todo:replaceasm mov	al,15
+  //todo:replaceasm xchg	al,[es:di+4]
+  //todo:replaceasm mov	al,15
+  //todo:replaceasm xchg	al,[es:di+4+SCREENWIDTH]
 
   EGABITMASK (24);
 
-  asm	mov	cx,CROSSSIZE-2
-  asm	mov	di,SCREENWIDTH*(65-CROSSSIZE/2)+20
-  asm	add	di,[screenofs]
-  asm	mov	dx,SCREENWIDTH
+  //todo:replaceasm mov	cx,CROSSSIZE-2
+  //todo:replaceasm mov	di,SCREENWIDTH*(65-CROSSSIZE/2)+20
+  //todo:replaceasm add	di,[screenofs]
+  //todo:replaceasm mov	dx,SCREENWIDTH
 vert2:
-  asm	mov	al,15
-  asm	xchg	al,[es:di]	// write color 15
-  asm	add	di,dx
-  asm	loop	vert2
+  //todo:replaceasm mov	al,15
+  //todo:replaceasm xchg	al,[es:di]	// write color 15
+  //todo:replaceasm add	di,dx
+  //todo:replaceasm loop	vert2
 }
 
 //==========================================================================
@@ -1116,27 +1116,27 @@ void FinishView (void)
 
   EGAWRITEMODE(0);
 
-asm 	cli
+//todo:replaceasm 	cli
 
-asm	mov	dx,GC_INDEX
-asm	mov	ax,GC_BITMASK + 255*256
-asm	out	dx,ax			// no bit mask
+//todo:replaceasm mov	dx,GC_INDEX
+//todo:replaceasm mov	ax,GC_BITMASK + 255*256
+//todo:replaceasm out	dx,ax			// no bit mask
 
-asm	mov	cx,[screenofs]
-asm	mov	dx,3d4h		// CRTC address register
-asm	mov	al,0ch		// start address high register
-asm	out	dx,al
-asm	inc	dx
-asm	mov	al,ch
-asm	out	dx,al   	// set the high byte
-asm	dec	dx
-asm	mov	al,0dh		// start address low register
-asm	out	dx,al
-asm	inc	dx
-asm	mov	al,cl
-asm	out	dx,al		// set the low byte
+//todo:replaceasm mov	cx,[screenofs]
+//todo:replaceasm mov	dx,3d4h		// CRTC address register
+//todo:replaceasm mov	al,0ch		// start address high register
+//todo:replaceasm out	dx,al
+//todo:replaceasm inc	dx
+//todo:replaceasm mov	al,ch
+//todo:replaceasm out	dx,al   	// set the high byte
+//todo:replaceasm dec	dx
+//todo:replaceasm mov	al,0dh		// start address low register
+//todo:replaceasm out	dx,al
+//todo:replaceasm inc	dx
+//todo:replaceasm mov	al,cl
+//todo:replaceasm out	dx,al		// set the low byte
 
-asm	sti
+//todo:replaceasm sti
 
 
 #ifdef ADAPTIVE

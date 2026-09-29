@@ -245,7 +245,7 @@ void SC_MakeShape (memptr src,int width,int height, memptr *shapeseg)
 
   pixwidth = width*8;
 
-  MMGetPtr(&(memptr)tempseg,pixwidth*(height+20));	// larger than needed buffer
+  MMGetPtr((memptr)&tempseg,pixwidth*(height+20));	// larger than needed buffer
 
   tempseg->width = pixwidth;	// pixel dimensions
   tempseg->height = height;
@@ -279,25 +279,25 @@ void SC_MakeShape (memptr src,int width,int height, memptr *shapeseg)
 	offset+=width;
 
 	color = 0;
-	asm	mov	cl,[BYTE PTR shift]
-	asm	mov	al,[BYTE PTR by3]
-	asm	rcr	al,cl;
-	asm	rcl	[BYTE PTR color],1;
+	//todo:replaceasm mov	cl,[BYTE PTR shift]
+	//todo:replaceasm mov	al,[BYTE PTR by3]
+	//todo:replaceasm rcr	al,cl;
+	//todo:replaceasm rcl	[BYTE PTR color],1;
 
-	asm	mov	cl,[BYTE PTR shift]
-	asm	mov	al,[BYTE PTR by2]
-	asm	rcr	al,cl;
-	asm	rcl	[BYTE PTR color],1;
+	//todo:replaceasm mov	cl,[BYTE PTR shift]
+	//todo:replaceasm mov	al,[BYTE PTR by2]
+	//todo:replaceasm rcr	al,cl;
+	//todo:replaceasm rcl	[BYTE PTR color],1;
 
-	asm	mov	cl,[BYTE PTR shift]
-	asm	mov	al,[BYTE PTR by1]
-	asm	rcr	al,cl;
-	asm	rcl	[BYTE PTR color],1;
+	//todo:replaceasm mov	cl,[BYTE PTR shift]
+	//todo:replaceasm mov	al,[BYTE PTR by1]
+	//todo:replaceasm rcr	al,cl;
+	//todo:replaceasm rcl	[BYTE PTR color],1;
 
-	asm	mov	cl,[BYTE PTR shift]
-	asm	mov	al,[BYTE PTR by0]
-	asm	rcr	al,cl;
-	asm	rcl	[BYTE PTR color],1;
+	//todo:replaceasm mov	cl,[BYTE PTR shift]
+	//todo:replaceasm mov	al,[BYTE PTR by0]
+	//todo:replaceasm rcr	al,cl;
+	//todo:replaceasm rcl	[BYTE PTR color],1;
 
 	*byteptr++ = color;
       }				// Y
@@ -371,7 +371,7 @@ void SC_MakeShape (memptr src,int width,int height, memptr *shapeseg)
   MMGetPtr (shapeseg,FP_OFF(saveptr));
   _fmemcpy (*shapeseg,tempseg,FP_OFF(saveptr));
   MMFreePtr (&byteseg);
-  MMFreePtr (&(memptr)tempseg);
+  MMFreePtr ((memptr)&tempseg);
 }
 
 
@@ -501,10 +501,10 @@ int SC_ScaleShape (int x,int y,unsigned scale, memptr shape)
       //
       // set bit mask
       //
-asm	mov	ah,[BYTE PTR mask]
-asm	mov	al,GC_BITMASK
-asm	mov	dx,GC_INDEX
-asm	out	dx,ax
+//todo:replaceasm mov	ah,[BYTE PTR mask]
+//todo:replaceasm mov	al,GC_BITMASK
+//todo:replaceasm mov	dx,GC_INDEX
+//todo:replaceasm out	dx,ax
 
       do
       {

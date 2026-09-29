@@ -22,13 +22,13 @@
 #include "SNDSHOV.H"
 
 #include <stdarg.h>
-#include <dos.h>
-#include <mem.h>
-#include <sys\stat.h>
+//#include <dos.h>
+//#include <mem.h>
+#include <sys/stat.h>
 #include <fcntl.h>
 #include <stdlib.h>
-#include <alloc.h>
-#include <io.h>
+//#include <alloc.h>
+//#include <io.h>
 
 #ifndef __jm__
 typedef enum {false,true} boolean;
@@ -158,8 +158,8 @@ int		extern	MouseSensitivity;
 char		extern	key[8], keyB1, keyB2;	// scan codes for key control
 
 
-void StartupKbd (void);						/* ASM */
-void ShutdownKbd (void);                                        /* ASM */
+void StartupKbd (void);						/* //todo:replaceasm */
+void ShutdownKbd (void);                                        /* //todo:replaceasm */
 
 void ReadJoystick (int joynum,int *xcount,int *ycount);
 
@@ -211,10 +211,10 @@ void RLEBExpand (unsigned char far *source, unsigned char far *dest);
 void RLEExpand (char far *surce,char far *dest,long length);
 unsigned RLECompress (char far *source, unsigned Length, char far *dest);
 
-void InitRnd (boolean randomize);				/* ASM */
-int Rnd (int max);                                              /* ASM */
-void InitRndT (boolean randomize);                              /* ASM */
-int RndT (void);                                                /* ASM */
+void InitRnd (boolean randomize);				/* //todo:replaceasm */
+int Rnd (int max);                                              /* //todo:replaceasm */
+void InitRndT (boolean randomize);                              /* //todo:replaceasm */
+int RndT (void);                                                /* //todo:replaceasm */
 
 void ClearKeys (void);
 
@@ -285,9 +285,9 @@ void ClearKeys (void);
 
 #define SCREENWIDTH	40
 
-#define EGAWRITEMODE(x) asm{cli;mov dx,GC_INDEX;mov ax,GC_MODE+256*x;out dx,ax;sti;}
-#define EGABITMASK(x) asm{mov dx,GC_INDEX;mov ax,GC_BITMASK+256*x;out dx,ax;sti;}
-#define EGAMAPMASK(x) asm{cli;mov dx,SC_INDEX;mov ax,SC_MAPMASK+x*256;out dx,ax;sti;}
+#define EGAWRITEMODE(x) //todo:replaceasm {cli;mov dx,GC_INDEX;mov ax,GC_MODE+256*x;out dx,ax;sti;}
+#define EGABITMASK(x) //todo:replaceasm {mov dx,GC_INDEX;mov ax,GC_BITMASK+256*x;out dx,ax;sti;}
+#define EGAMAPMASK(x) //todo:replaceasm {cli;mov dx,SC_INDEX;mov ax,SC_MAPMASK+x*256;out dx,ax;sti;}
 
 typedef enum {text,CGAgr,EGAgr,VGAgr} grtype;
 typedef enum {NOcard,MDAcard,CGAcard,EGAcard,MCGAcard,VGAcard,
@@ -316,8 +316,8 @@ void SetDefaultColors(void);		// full bright palete
 void FadeOut (void);			// EGA 16 color palette fade
 void FadeIn (void);
 
-void XorBar(int xl,int yl,int width,int height);
-void Bar (int xl,int yl,int width,int height,int fill);
+//void XorBar(int xl,int yl,int width,int height);
+//void Bar (int xl,int yl,int width,int height,int fill);
 
 /*
 ============================================================================
@@ -392,7 +392,7 @@ extern unsigned px,py;
 extern unsigned pxl,pxh,pyl,pyh;
 extern fontstruct _seg * fontseg;
 
-void DrawPchar (int picnum);
+//void DrawPchar (int picnum);
 void DrawMPchar (int picnum);
 #endif
 
@@ -400,13 +400,13 @@ void DrawMPchar (int picnum);
 // base drawing routines, x in bytes, y in lines
 //
 
-void DrawChar (int x, int y, int picnum);
+//void DrawChar (int x, int y, int picnum);
 void MaskChar (int x, int y, int picnum);
 void CopyChar (int x, int y);
-void DrawPic (int x, int y, int picnum);
+//void DrawPic (int x, int y, int picnum);
 void DrawSprite (int xcoord, int ycoord, int spritenum);
-void DrawSpriteT (unsigned wide,unsigned height,unsigned source,
-  unsigned dest, unsigned plsize);
+//void DrawSpriteT (unsigned wide,unsigned height,unsigned source,
+//  unsigned dest, unsigned plsize);
 
 
 /*

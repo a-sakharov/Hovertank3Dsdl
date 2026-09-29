@@ -372,14 +372,14 @@ void SegRead (int handle, memptr dest, long length)
   if (length>0xffffl)
 	 Quit ("SegRead doesn't support 64K reads yet!");
 
-asm		push	ds
-asm		mov	bx,[handle]
-asm		mov	cx,[WORD PTR length]
-asm		mov	dx,0			// segment aligned
-asm		mov	ds,[dest]
-asm		mov	ah,3fh			// READ w/handle
-asm		int	21h
-asm		pop	ds
+//todo:replaceasm 	push	ds
+//todo:replaceasm 	mov	bx,[handle]
+//todo:replaceasm 	mov	cx,[WORD PTR length]
+//todo:replaceasm 	mov	dx,0			// segment aligned
+//todo:replaceasm 	mov	ds,[dest]
+//todo:replaceasm 	mov	ah,3fh			// READ w/handle
+//todo:replaceasm 	int	21h
+//todo:replaceasm 	pop	ds
 
 }
 

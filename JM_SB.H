@@ -25,7 +25,7 @@ typedef unsigned boolean;
 
 
 #ifndef	__jm__
-#include "jm.h"
+#include "JM.H"
 #endif
 
 // Registers for the Sound Blaster card - needs to be offset by n0
